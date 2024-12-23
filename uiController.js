@@ -1,4 +1,46 @@
 window.UIController = {
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.innerHTML = `
+            <div class="flex items-center gap-2 px-4 py-3 bg-[#F3F1FF] rounded-lg shadow-md text-[#4A3F8D] border border-[#E5E1FF]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm45.66 85.66-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32Z"/>
+                </svg>
+                ${message}
+            </div>
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            animation: slideUpAndStay 0.3s ease-out;
+        `;
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideUpAndStay {
+                from { transform: translate(-50%, 100%); opacity: 0; }
+                to { transform: translate(-50%, 0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(notification);
+
+        // Display for 7 seconds before fading out
+        setTimeout(() => {
+            notification.style.transition = 'opacity 0.5s ease-in';
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 500);
+        }, 7000);
+    },
+
     createContextButton() {
         const button = document.createElement('button');
         button.innerHTML = `
@@ -34,47 +76,6 @@ window.UIController = {
         return button;
     },
 
-    showNotification(message) {
-        const notification = document.createElement('div');
-        notification.innerHTML = `
-            <div class="flex items-center gap-2 px-4 py-3 bg-[#F3F1FF] rounded-lg shadow-md text-[#4A3F8D] border border-[#E5E1FF]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm45.66 85.66-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32Z"/>
-                </svg>
-                ${message}
-            </div>
-        `;
-        
-        notification.style.cssText = `
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-            animation: slideUp 0.3s ease-out, fadeOut 0.5s ease-in 4.5s;
-        `;
-
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideUp {
-                from { transform: translate(-50%, 100%); opacity: 0; }
-                to { transform: translate(-50%, 0); opacity: 1; }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.remove();
-            style.remove();
-        }, 5000);
-    },
-
     async addContextButton(onClickCallback) {
         console.log('Adding context button...');
         const button = this.createContextButton();
@@ -90,20 +91,15 @@ window.UIController = {
                 
                 await onClickCallback();
                 
-                this.updateButtonText(button, 'Copied!');
-                
-                setTimeout(() => {
-                    button.disabled = false;
-                    this.resetButtonText(button);
-                }, 2000);
+                this.showNotification('Context copied to clipboard!');
+                this.resetButtonText(button);
+                button.disabled = false;
                 
             } catch (error) {
                 console.error('Button click error:', error);
-                this.updateButtonText(button, 'Error - check console');
+                this.showNotification('Error - check console');
+                this.resetButtonText(button);
                 button.disabled = false;
-                setTimeout(() => {
-                    this.resetButtonText(button);
-                }, 2000);
             }
         };
 
