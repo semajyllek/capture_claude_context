@@ -1,4 +1,3 @@
-// background.js
 let apiKey = '';
 
 // Listen for messages from content script

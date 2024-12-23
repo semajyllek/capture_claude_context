@@ -1,4 +1,3 @@
-// content.js
 async function waitForCodeContent(button) {
     return new Promise((resolve) => {
         // Create a temporary observer just for this button click

@@ -1,4 +1,3 @@
-// main.js
 async function handleContextGeneration() {
     try {
         console.log('Starting context generation...');

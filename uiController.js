@@ -1,48 +1,4 @@
-// uiController.js
 window.UIController = {
-	showNotification(message) {
-        const notification = document.createElement('div');
-        notification.innerHTML = `
-            <div class="flex items-center gap-2 px-4 py-3 bg-[#F3F1FF] rounded-lg shadow-md text-[#4A3F8D] border border-[#E5E1FF]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm45.66 85.66-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32Z"/>
-                </svg>
-                ${message}
-            </div>
-        `;
-        
-        notification.style.cssText = `
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-            animation: slideUp 0.3s ease-out, fadeOut 0.3s ease-in 2.7s;
-        `;
-
-        // Add keyframe animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideUp {
-                from { transform: translate(-50%, 100%); opacity: 0; }
-                to { transform: translate(-50%, 0); opacity: 1; }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        document.body.appendChild(notification);
-
-        // Remove after animation
-        setTimeout(() => {
-            notification.remove();
-            style.remove();
-        }, 3000);
-    },
-	
     createContextButton() {
         const button = document.createElement('button');
         button.innerHTML = `
@@ -50,7 +6,7 @@ window.UIController = {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
                     <path d="M224 128a8 8 0 0 1-8 8h-80v80a8 8 0 0 1-16 0v-80H40a8 8 0 0 1 0-16h80V40a8 8 0 0 1 16 0v80h80a8 8 0 0 1 8 8z"/>
                 </svg>
-                Generate Context
+                Capture Context
             </div>
         `;
         
@@ -81,7 +37,7 @@ window.UIController = {
     showNotification(message) {
         const notification = document.createElement('div');
         notification.innerHTML = `
-            <div class="flex items-center gap-2 px-4 py-3 bg-bg-200 rounded-lg shadow-md text-text-100 border border-border-200">
+            <div class="flex items-center gap-2 px-4 py-3 bg-[#F3F1FF] rounded-lg shadow-md text-[#4A3F8D] border border-[#E5E1FF]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
                     <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm45.66 85.66-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32Z"/>
                 </svg>
@@ -95,10 +51,9 @@ window.UIController = {
             left: 50%;
             transform: translateX(-50%);
             z-index: 10000;
-            animation: slideUp 0.3s ease-out, fadeOut 0.3s ease-in 2.7s;
+            animation: slideUp 0.3s ease-out, fadeOut 0.5s ease-in 4.5s;
         `;
 
-        // Add keyframe animations
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideUp {
@@ -114,11 +69,10 @@ window.UIController = {
 
         document.body.appendChild(notification);
 
-        // Remove after animation
         setTimeout(() => {
             notification.remove();
             style.remove();
-        }, 3000);
+        }, 5000);
     },
 
     async addContextButton(onClickCallback) {
@@ -132,7 +86,7 @@ window.UIController = {
 
             try {
                 button.disabled = true;
-                this.updateButtonText(button, 'Generating...');
+                this.updateButtonText(button, 'Capturing...');
                 
                 await onClickCallback();
                 
@@ -172,7 +126,7 @@ window.UIController = {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
                     <path d="M224 128a8 8 0 0 1-8 8h-80v80a8 8 0 0 1-16 0v-80H40a8 8 0 0 1 0-16h80V40a8 8 0 0 1 16 0v80h80a8 8 0 0 1 8 8z"/>
                 </svg>
-                Generate Context
+                Capture Context
             </div>
         `;
     }

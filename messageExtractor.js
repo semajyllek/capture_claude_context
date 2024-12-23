@@ -1,4 +1,3 @@
-// messageExtractor.js
 window.MessageExtractor = {
     // Helper to extract filename from code comments/markers
     extractFilename(codeText) {

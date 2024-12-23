@@ -1,4 +1,3 @@
-// codeParser.js
 window.CodeParser = {
     // Extract function/class signature (e.g., "def prepare_model(model_name):" or "class ModelTrainer:")
     extractSignature(line) {

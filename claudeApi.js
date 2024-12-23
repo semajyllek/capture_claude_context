@@ -1,4 +1,3 @@
-// claudeApi.js
 window.ClaudeAPI = {
     async getApiKey() {
         const key = prompt('Please enter your Claude API key:');
